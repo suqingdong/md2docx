@@ -30,8 +30,9 @@ class DocStyle(object):
         for paragraph in self.document.paragraphs:
 
             # 删除段落间距
-            paragraph.paragraph_format.space_before = Pt(0)
-            paragraph.paragraph_format.space_after = Pt(0)
+            # paragraph.paragraph_format.space_before = Pt(0)
+            # paragraph.paragraph_format.space_after = Pt(0)
+
             # 设置1.5倍行距
             paragraph.paragraph_format.line_spacing = 1.5
 
