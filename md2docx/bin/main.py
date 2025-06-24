@@ -7,7 +7,10 @@ from md2docx import version_info
 from md2docx.core import MD2DOCX
 
 
-CONTEXT_SETTINGS = dict(help_option_names=['-?', '-h', '--help'])
+CONTEXT_SETTINGS = dict(
+    help_option_names=['-?', '-h', '--help'],
+    max_content_width=200,
+)
 
 
 epilog = click.style('''
@@ -21,21 +24,23 @@ examples:
     {prog} tests/demo.md -o tests/demo-render-mermaid.docx --render-mermaid 
     {prog} tests/demo.md -o tests/demo-styles.docx --heading-color FF00FF --default-font Arial --chinese-font 微软雅黑
 
-''')
+\x1b[34mcontact: {author}<{author_email}>\x1b[0m
+''', fg='yellow').format(**version_info)
 
 @click.command(
     name=version_info['prog'],
     help=click.style(version_info['desc'], italic=True, fg='cyan', bold=True),
     context_settings=CONTEXT_SETTINGS,
     no_args_is_help=True,
+    epilog=epilog,
 )
 @click.argument('input_file')
 @click.option('-o', '--output-file', help='the output file name', default='output.docx', show_default=True)
-@click.option('--code-as-image', help='render code blocks as images', is_flag=True, default=False)
 @click.option('--default-font', help='default font for the document', default='Times New Roman', show_default=True)
 @click.option('--chinese-font', help='default Chinese font for the document', default='宋体', show_default=True)
 @click.option('--default-font-size', help='default font size for the document', type=int, default=12, show_default=True)
 @click.option('--heading-color', help='default heading color in hex format', default='17a2b8', show_default=True)
+@click.option('--code-as-image', help='render code blocks as images', is_flag=True, default=False)
 @click.option('--render-mermaid', help='render mermaid diagrams', is_flag=True, default=False)
 @click.version_option(version=version_info['version'], prog_name=version_info['prog'])
 def cli(**kwargs):

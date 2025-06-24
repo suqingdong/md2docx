@@ -47,4 +47,6 @@ MD2DOCX().convert(
 - [x] Quote
 - [x] Checkbox
 - [x] Mermaid
-- [x] Latex
+
+**Render Mermaid** based on [Mermaid Client(mmdc)](https://github.com/mermaid-js/mermaid-cli)
+install it with: `npm install -g @mermaid-js/mermaid-cli`

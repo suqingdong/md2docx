@@ -1,5 +1,5 @@
 {
-    "name": "md2docx-python",
+    "name": "python-md2docx",
     "prog": "md2docx",
     "desc": "A user-friendly tool for converting Markdown to DOCX",
     "url": "https://github.com/suqingdong/md2docx",

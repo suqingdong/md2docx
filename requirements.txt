@@ -1,5 +1,7 @@
+click
 loguru
 pillow
 requests
 markdown
 python-docx
+pygments
