@@ -1,0 +1,5 @@
+loguru
+pillow
+requests
+markdown
+python-docx
