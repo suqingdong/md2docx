@@ -9,9 +9,12 @@ from . import processors, line_type
 class MD2DOCX(object):
 
     def get_content(self, md):
-        if Path(md).is_file():
-            with open(md, encoding='utf-8') as f:
-                md = f.read()
+        try:
+            if Path(md).is_file():
+                with open(md, encoding='utf-8') as f:
+                    md = f.read()
+        except Exception as e:
+            pass
         return md
 
     def convert(
