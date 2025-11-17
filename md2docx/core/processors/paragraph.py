@@ -3,6 +3,7 @@ from docx import Document
 from docx.shared import Pt
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+from docx.text.paragraph import Paragraph
 
 from md2docx.utils import DocStyle, color_to_rgb
 
@@ -35,15 +36,15 @@ def add_hyperlink(paragraph, text, url):
     paragraph._p.append(hyperlink)
 
 
-def process_paragraph(
-        doc: Document,
+# 提取出的新函数：处理所有内联样式
+def process_inline_styles(
+        p: Paragraph,  # 注意：这里接收一个 Paragraph 对象，而不是 Document
         line: str,
         inline_color: str = 'C72E96',
         inline_background: str = 'F2F2F2',
     ):
-    """处理普通段落，支持加粗、斜体、行内代码、超链接"""
-    p = doc.add_paragraph()
-
+    """处理段落内的加粗、斜体、行内代码、超链接"""
+    
     # 提取 Markdown 超链接并替换为占位符
     link_pattern = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
     link_matches = list(link_pattern.finditer(line))
@@ -78,3 +79,17 @@ def process_paragraph(
             add_hyperlink(p, text, url)
         else:
             p.add_run(part)
+
+
+# 修改后的 process_paragraph
+def process_paragraph(
+        doc: Document,
+        line: str,
+        inline_color: str = 'C72E96',
+        inline_background: str = 'F2F2F2',
+    ):
+    """处理普通段落，支持加粗、斜体、行内代码、超链接"""
+    p = doc.add_paragraph()  # 1. 创建段落
+    
+    # 2. 调用新函数来填充内容
+    process_inline_styles(p, line, inline_color, inline_background)

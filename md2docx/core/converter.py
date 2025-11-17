@@ -58,7 +58,7 @@ class MD2DOCX(object):
                 i += 1
             # 处理列表
             elif line_type.is_list_item(line):
-                processors.process_list_item(doc, line)
+                processors.process_list_item(doc, line, inline_color='FF0000', inline_background='F2F2F2')
                 i += 1
             # 处理引用
             elif line_type.is_quote(line):
