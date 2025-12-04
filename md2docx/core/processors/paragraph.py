@@ -44,6 +44,14 @@ def process_inline_styles(
         inline_background: str = 'F2F2F2',
     ):
     """处理段落内的加粗、斜体、行内代码、超链接"""
+
+    # 移除HTML标签
+    line = re.sub(r'<[^>]+>', '', line)
+
+    # 特殊链接处理
+    # [[xxx]](https://www.baidu.com) ==> [xxx]
+    line = re.sub(r'\[\[([^\]]+)\]\]\(([^)]+)\)', r'[\1]', line)
+
     
     # 提取 Markdown 超链接并替换为占位符
     link_pattern = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
