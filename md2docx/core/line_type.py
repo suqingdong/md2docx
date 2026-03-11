@@ -4,7 +4,12 @@ import re
 def is_table_row(line: str) -> bool:
     """判断是否为表格行"""
     line = line.strip()
-    return bool(line and '|' in line and line.count('|') >= 2)
+    
+    table_pattern = r'^\|(.+\|)+.+\|$'
+    if not (line.startswith('|') or line.endswith('|') or line.count('|') >= 2):
+        return False
+    
+    return bool(re.match(table_pattern, line))
 
 
 def is_table_separator(line: str) -> bool:

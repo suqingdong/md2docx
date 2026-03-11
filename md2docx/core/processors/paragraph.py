@@ -1,4 +1,7 @@
 import re
+
+from w3lib import html
+
 from docx import Document
 from docx.shared import Pt
 from docx.oxml import OxmlElement
@@ -45,8 +48,8 @@ def process_inline_styles(
     ):
     """处理段落内的加粗、斜体、行内代码、超链接"""
 
-    # 移除HTML标签
-    line = re.sub(r'<[^>]+>', '', line)
+    # 移除HTML标签： div, a
+    line = html.remove_tags(line, which_ones=('div', 'a'))
 
     # 特殊链接处理
     # [[xxx]](https://www.baidu.com) ==> [xxx]

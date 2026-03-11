@@ -1,5 +1,7 @@
 import os
 
+import loguru
+
 from docx import Document
 from docx.shared import Pt
 
@@ -54,6 +56,8 @@ def process_code_block(
     
     # 创建代码块段落
     code_text = '\n'.join(code_lines)
+
+    loguru.logger.debug(f'Processing code block: {language}, render_mermaid={render_mermaid}')
 
     if language.lower() == 'mermaid' and  render_mermaid:
         if not add_mermaid_code_block(doc, code_text):
