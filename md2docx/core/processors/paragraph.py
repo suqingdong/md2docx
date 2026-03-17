@@ -1,6 +1,7 @@
 import re
 
 from w3lib import html
+from bs4 import BeautifulSoup
 
 from docx import Document
 from docx.shared import Pt
@@ -9,6 +10,13 @@ from docx.oxml.ns import qn
 from docx.text.paragraph import Paragraph
 
 from md2docx.utils import DocStyle, color_to_rgb
+
+
+def remove_html_tags(text, which_ones=['div', 'a']):
+    soup = BeautifulSoup(text, 'html.parser')
+    for tag in soup.find_all(which_ones):
+        tag.unwrap()
+    return soup.get_text()
 
 
 def add_hyperlink(paragraph, text, url):
@@ -49,13 +57,13 @@ def process_inline_styles(
     """处理段落内的加粗、斜体、行内代码、超链接"""
 
     # 移除HTML标签： div, a
-    line = html.remove_tags(line, which_ones=('div', 'a'))
+    line = remove_html_tags(line, which_ones=('div', 'a'))
+    # line = html.remove_tags(line, which_ones=('div', 'a'))  # 容易出问题
 
     # 特殊链接处理
     # [[xxx]](https://www.baidu.com) ==> [xxx]
     line = re.sub(r'\[\[([^\]]+)\]\]\(([^)]+)\)', r'[\1]', line)
 
-    
     # 提取 Markdown 超链接并替换为占位符
     link_pattern = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
     link_matches = list(link_pattern.finditer(line))
